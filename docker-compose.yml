@@ -6,6 +6,12 @@ services:
       - "5672:5672"
       - "15672:15672"
 
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+
   catalog-service:
     build: ./catalog-service
     container_name: catalog-service
@@ -18,6 +24,8 @@ services:
     ports:
       - "8002:8000"
       - "50051:50051"
+    depends_on:
+      - redis
 
   orders-service:
     build: ./orders-service
